@@ -8,9 +8,9 @@
 		<version>3.2.0</version>
 		<relativePath/>
 	</parent>
-	<groupId>com.custom</groupId>
-	<artifactId>customgrant</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<groupId>com.custom.password.authentication</groupId>
+	<artifactId>custom-grant-authentication</artifactId>
+	<version>1.0.0</version>
 	<packaging>jar</packaging>
 	<properties>
 		<java.version>17</java.version>
@@ -49,7 +49,7 @@
 		<repository>
 			<id>github</id>
 			<name>GitHub Packages</name>
-			<url>https://maven.pkg.github.com/andersonsilvaa/customgrant</url>
+			<url>https://maven.pkg.github.com/andersonsilvaa/custom-grant-authentication</url>
 		</repository>
 	</distributionManagement>
 </project>

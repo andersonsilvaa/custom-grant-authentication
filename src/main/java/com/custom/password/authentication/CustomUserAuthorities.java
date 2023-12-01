@@ -4,12 +4,12 @@ import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
 
-public class UserAuthorities {
+public class CustomUserAuthorities {
 
     private String username;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserAuthorities(String username, Collection<? extends GrantedAuthority> authorities) {
+    public CustomUserAuthorities(String username, Collection<? extends GrantedAuthority> authorities) {
         this.username = username;
         this.authorities = authorities;
     }

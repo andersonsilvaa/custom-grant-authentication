@@ -14,7 +14,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.*;
 
-public class Converter implements AuthenticationConverter {
+public class CustomPasswordAuthenticationConverter implements AuthenticationConverter {
 
     @Nullable
     @Override
@@ -64,7 +64,7 @@ public class Converter implements AuthenticationConverter {
         });
 
         Authentication clientPrincipal = SecurityContextHolder.getContext().getAuthentication();
-        return new Token(clientPrincipal, requestedScopes, additionalParameters);
+        return new CustomPasswordAuthenticationToken(clientPrincipal, requestedScopes, additionalParameters);
     }
 
     private static MultiValueMap<String, String> getParameters(HttpServletRequest request) {

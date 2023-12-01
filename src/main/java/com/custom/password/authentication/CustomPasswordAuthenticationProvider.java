@@ -26,7 +26,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class Provider implements AuthenticationProvider {
+public class CustomPasswordAuthenticationProvider implements AuthenticationProvider {
 
     private static final String ERROR_URI = "https://datatracker.ietf.org/doc/html/rfc6749#section-5.2";
     private final OAuth2AuthorizationService authorizationService;
@@ -37,9 +37,9 @@ public class Provider implements AuthenticationProvider {
     private String password = "";
     private Set<String> authorizedScopes = new HashSet<>();
 
-    public Provider(OAuth2AuthorizationService authorizationService,
-                    OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
-                    UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
+    public CustomPasswordAuthenticationProvider(OAuth2AuthorizationService authorizationService,
+                                                OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
+                                                UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
 
         Assert.notNull(authorizationService, "authorizationService cannot be null");
         Assert.notNull(tokenGenerator, "TokenGenerator cannot be null");
@@ -54,7 +54,7 @@ public class Provider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
-        Token customPasswordAuthenticationToken = (Token) authentication;
+        CustomPasswordAuthenticationToken customPasswordAuthenticationToken = (CustomPasswordAuthenticationToken) authentication;
         OAuth2ClientAuthenticationToken clientPrincipal = getAuthenticatedClientElseThrowInvalidClient(customPasswordAuthenticationToken);
         RegisteredClient registeredClient = clientPrincipal.getRegisteredClient();
         username = customPasswordAuthenticationToken.getUsername();
@@ -78,7 +78,7 @@ public class Provider implements AuthenticationProvider {
 
         //-----------Create a new Security Context Holder Context----------
         OAuth2ClientAuthenticationToken oAuth2ClientAuthenticationToken = (OAuth2ClientAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-        UserAuthorities customPasswordUser = new UserAuthorities(username, user.getAuthorities());
+        CustomUserAuthorities customPasswordUser = new CustomUserAuthorities(username, user.getAuthorities());
         oAuth2ClientAuthenticationToken.setDetails(customPasswordUser);
 
         var newcontext = SecurityContextHolder.createEmptyContext();
@@ -127,7 +127,7 @@ public class Provider implements AuthenticationProvider {
 
     @Override
     public boolean supports(Class<?> authentication) {
-        return Token.class.isAssignableFrom(authentication);
+        return CustomPasswordAuthenticationToken.class.isAssignableFrom(authentication);
     }
 
     private static OAuth2ClientAuthenticationToken getAuthenticatedClientElseThrowInvalidClient(Authentication authentication) {
