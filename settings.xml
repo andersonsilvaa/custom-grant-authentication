@@ -29,8 +29,14 @@
   <servers>
     <server>
       <id>github</id>
-      <username>andersonsilvaa</username>
-      <password>${{ secrets.GITHUB_TOKEN }}</password>
+      <configuration>
+    		<httpHeaders>
+    		  <property>
+    			<name>Authorization</name>
+    			<value>Bearer ${{ secrets.GITHUB_TOKEN }}</value>
+    		  </property>
+    		</httpHeaders>
+	  </configuration>
     </server>
   </servers>
 </settings>
